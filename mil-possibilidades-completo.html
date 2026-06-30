@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mil Possibilidades, Estrutura de Negócio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FBF6F1;
+    --cream-warm: #F5EBE3;
+    --ink: #241F2E;
+    --ink-soft: #4A4458;
+
+    --pink: #E8A3B4;
+    --pink-deep: #C66E87;
+    --pink-pale: #FBE3E8;
+
+    --green: #8FE6A8;
+    --green-deep: #2F6B47;
+    --green-dark: #16261C;
+    --green-dark2: #1E3327;
+
+    --line: rgba(36,31,46,0.12);
+    --line-dark: rgba(251,246,241,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--green-dark);
+    color: var(--cream);
+    padding: 80px 40px 96px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(143,230,168,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    left: -5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(232,163,180,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 28px;
+    padding: 6px 14px;
+    border: 1px solid rgba(143,230,168,0.35);
+    border-radius: 100px;
+  }
+
+  .hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  .hero-title {
+    font-size: clamp(48px, 8vw, 88px);
+    line-height: 0.98;
+    margin-bottom: 24px;
+  }
+
+  .hero-title .px {
+    color: var(--pink);
+  }
+
+  .hero-title .gx {
+    color: var(--green);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(251,246,241,0.72);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(251,246,241,0.2);
+    color: rgba(251,246,241,0.85);
+  }
+
+  /* ===== MAIN WRAPPER ===== */
+  .main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .block {
+    padding: 72px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .block:last-of-type { border-bottom: none; }
+
+  .block-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink-deep);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .block-title {
+    font-size: clamp(28px, 4vw, 38px);
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+
+  .block-desc {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin-bottom: 8px;
+  }
+
+  /* ===== DIFERENCIAL ===== */
+  .diferencial-card {
+    margin-top: 32px;
+    padding: 40px;
+    background: var(--ink);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diferencial-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(143,230,168,0.15), transparent 70%);
+  }
+
+  .diferencial-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .diferencial-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(20px, 3vw, 26px);
+    color: var(--cream);
+    line-height: 1.4;
+    max-width: 780px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .diferencial-text .hl {
+    color: var(--pink);
+  }
+
+  /* ===== NICHO STRIP ===== */
+  .nicho-strip {
+    margin-top: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 22px 26px;
+    background: var(--pink-pale);
+    border-radius: 16px;
+    border: 1px solid rgba(198,110,135,0.18);
+  }
+
+  .nicho-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .nicho-text {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  .nicho-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ===== DIAGNÓSTICO BAR ===== */
+  .diag-bar {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+  }
+
+  .diag-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--pink-deep);
+    flex-shrink: 0;
+  }
+
+  .diag-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .diag-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ===== PRODUCT CARDS ===== */
+  .products-stack {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    padding: 32px;
+    position: relative;
+  }
+
+  .product-card.featured {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .product-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .product-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pink-deep);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .featured .product-id { color: var(--green); }
+
+  .product-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+  }
+
+  .featured .product-name { color: var(--cream); }
+
+  .product-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-now { background: var(--pink-pale); color: var(--pink-deep); }
+  .status-future { background: rgba(143,230,168,0.15); color: var(--green); border: 1px solid rgba(143,230,168,0.3); }
+  .status-flex { background: rgba(36,31,46,0.06); color: var(--ink-soft); }
+  .featured .status-flex { background: rgba(251,246,241,0.1); color: rgba(251,246,241,0.75); }
+
+  .product-tagline {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    max-width: 560px;
+  }
+
+  .featured .product-tagline { color: rgba(251,246,241,0.65); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 28px;
+  }
+
+  .product-list-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+
+  .featured .product-list-label { color: rgba(251,246,241,0.5); }
+
+  .product-item {
+    display: flex;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .featured .product-item { color: rgba(251,246,241,0.78); }
+
+  .product-item-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--pink-deep);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .featured .product-item-dot { background: var(--green); }
+
+  .product-excl {
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: var(--cream-warm);
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .featured .product-excl { background: rgba(251,246,241,0.06); color: rgba(251,246,241,0.6); }
+
+  .product-excl strong { color: var(--ink); }
+  .featured .product-excl strong { color: var(--cream); }
+
+  .detail-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--pink-deep);
+    text-decoration: none;
+    border: none;
+    border-bottom: 1px solid rgba(198,110,135,0.35);
+    background: none;
+    padding: 0 0 2px 0;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .detail-link:hover { opacity: 0.7; }
+
+  .basic-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 28px 0 24px;
+  }
+
+  .basic-tier {
+    background: var(--cream-warm);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+
+  .basic-tier-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .basic-tier-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+  }
+
+  .meta-chip {
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 10px 14px;
+    background: var(--cream-warm);
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .featured .meta-chip { background: rgba(251,246,241,0.06); color: rgba(251,246,241,0.7); }
+
+  .meta-chip b { color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 600; }
+  .featured .meta-chip b { color: var(--cream); }
+
+  .flex-note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: rgba(198,110,135,0.08);
+    border: 1px dashed rgba(198,110,135,0.35);
+    border-radius: 12px;
+    font-size: 12.5px;
+    color: var(--pink-deep);
+    line-height: 1.5;
+  }
+
+  /* ===== ADDON / FUTURE PRODUCT ===== */
+  .future-card {
+    margin-top: 16px;
+    background: linear-gradient(135deg, var(--green-dark2), var(--green-dark));
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .future-card::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(232,163,180,0.18), transparent 70%);
+  }
+
+  .future-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .future-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .future-desc {
+    font-size: 14.5px;
+    color: rgba(251,246,241,0.75);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .future-pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pillar {
+    background: rgba(251,246,241,0.06);
+    border: 1px solid rgba(251,246,241,0.1);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .pillar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .pillar-desc {
+    font-size: 12px;
+    color: rgba(251,246,241,0.6);
+    line-height: 1.5;
+  }
+
+  /* ===== INNOVATION PRINCIPLE ===== */
+  .principle-band {
+    margin-top: 16px;
+    text-align: left;
+    padding: 36px 0 8px;
+  }
+
+  .principle-quote {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(22px, 3.4vw, 30px);
+    line-height: 1.35;
+    max-width: 760px;
+    color: var(--ink);
+  }
+
+  .principle-quote .px { color: var(--pink-deep); }
+  .principle-quote .gx { color: var(--green-deep); }
+
+  .principle-tags {
+    margin-top: 24px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ptag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+  }
+
+  /* ===== PRICING ===== */
+  .pricing-grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .price-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .price-product {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pink-deep);
+    margin-bottom: 14px;
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+  }
+
+  .price-row:last-of-type { border-bottom: none; }
+
+  .price-label { color: var(--ink-soft); }
+  .price-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  .price-margin {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .price-margin-label { font-size: 12px; color: var(--green-deep); font-weight: 600; }
+  .price-margin-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--green-deep); }
+
+  /* ===== COMBOS ===== */
+  .combo-row {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .combo-card {
+    background: var(--cream-warm);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+
+  .combo-title { font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
+  .combo-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-soft); margin-bottom: 12px; }
+  .combo-price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; color: var(--pink-deep); }
+  .combo-price-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-soft); }
+
+  /* ===== SCALE ===== */
+  .scale-card {
+    margin-top: 24px;
+    background: var(--ink);
+    border-radius: 20px;
+    padding: 32px 36px;
+  }
+
+  .scale-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+
+  .scale-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .scale-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(251,246,241,0.55); margin-bottom: 6px; }
+  .scale-value { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 26px; color: var(--green); }
+  .scale-sub { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: rgba(251,246,241,0.45); margin-top: 3px; }
+
+  /* ===== ROADMAP ===== */
+  .roadmap-list {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .road-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .road-item:first-child { border-top: none; }
+
+  .road-phase {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pink-deep);
+    line-height: 1.4;
+  }
+
+  .road-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+
+  .road-desc {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 620px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--ink);
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .footer-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--cream);
+  }
+
+  .footer-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(251,246,241,0.4);
+    margin-top: 8px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .hero { padding: 56px 24px 64px; }
+    .main { padding: 0 20px; }
+    .block { padding: 48px 0; }
+    .product-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .combo-row { grid-template-columns: 1fr 1fr; }
+    .scale-grid { grid-template-columns: 1fr; gap: 16px; }
+    .future-pillars { grid-template-columns: 1fr; }
+    .road-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* ===== PAGE SYSTEM ===== */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== DETAIL PAGE STYLES ===== */
+  .topbar {
+    background: var(--green-dark);
+    padding: 24px 40px;
+  }
+
+  .topbar-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--green);
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .back-link:hover { opacity: 0.8; }
+
+  .detail-hero {
+    background: var(--green-dark);
+    color: var(--cream);
+    padding: 24px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .detail-hero::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(143,230,168,0.16) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .detail-hero-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .detail-hero-title {
+    font-size: clamp(34px, 5.5vw, 54px);
+    line-height: 1.05;
+    margin-bottom: 20px;
+    max-width: 760px;
+  }
+
+  .detail-hero-sub {
+    font-size: 16.5px;
+    color: rgba(251,246,241,0.72);
+    max-width: 600px;
+    line-height: 1.65;
+  }
+
+  .scenario-card {
+    margin-top: 32px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .scenario-header {
+    padding: 28px 32px;
+    background: var(--cream-warm);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .scenario-icon { font-size: 28px; flex-shrink: 0; }
+  .scenario-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; }
+  .scenario-sub { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+  .scenario-body { padding: 28px 32px; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .tl-item:first-child { border-top: none; padding-top: 0; }
+  .tl-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--pink-deep); }
+  .tl-text { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+  .tl-text strong { color: var(--ink); font-weight: 600; }
+
+  .msg-bubble {
+    margin-top: 6px;
+    background: var(--pink-pale);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--ink);
+    font-style: italic;
+    max-width: 480px;
+  }
+
+  .examples-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .example-card { background: var(--cream-warm); border-radius: 14px; padding: 22px 24px; }
+  .example-proc { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink-deep); margin-bottom: 8px; }
+  .example-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 10px; }
+  .example-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  .prontuario-card {
+    margin-top: 32px;
+    background: var(--ink);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prontuario-card::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(143,230,168,0.15), transparent 70%);
+  }
+
+  .prontuario-badge { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; position: relative; z-index: 2; }
+  .prontuario-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; color: var(--cream); margin-bottom: 14px; position: relative; z-index: 2; max-width: 600px; }
+  .prontuario-desc { font-size: 14.5px; color: rgba(251,246,241,0.75); line-height: 1.7; max-width: 640px; margin-bottom: 24px; position: relative; z-index: 2; }
+
+  .mvp-steps { display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2; }
+  .mvp-step { display: flex; align-items: flex-start; gap: 14px; background: rgba(251,246,241,0.06); border: 1px solid rgba(251,246,241,0.1); border-radius: 12px; padding: 14px 18px; }
+  .mvp-step-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--green); flex-shrink: 0; }
+  .mvp-step-text { font-size: 13.5px; color: rgba(251,246,241,0.85); line-height: 1.6; }
+  .mvp-step-text strong { color: var(--cream); }
+
+  .crm-grid { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .crm-feature { background: white; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .crm-feature-icon { font-size: 22px; margin-bottom: 12px; }
+  .crm-feature-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+  .crm-feature-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* roadmap inside detail page */
+  .roadmap-future-card {
+    margin-top: 32px;
+    background: linear-gradient(135deg, var(--green-dark2), var(--green-dark));
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .roadmap-future-card::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(232,163,180,0.18), transparent 70%);
+  }
+
+  .roadmap-future-badge { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; position: relative; z-index: 2; }
+  .roadmap-future-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; color: var(--cream); margin-bottom: 14px; position: relative; z-index: 2; max-width: 620px; }
+  .roadmap-future-desc { font-size: 14.5px; color: rgba(251,246,241,0.75); line-height: 1.7; max-width: 660px; position: relative; z-index: 2; }
+
+  .modular-banner {
+    margin-top: 32px;
+    padding: 28px 32px;
+    background: var(--pink-pale);
+    border: 1px solid rgba(198,110,135,0.2);
+    border-radius: 18px;
+  }
+
+  .modular-banner-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; color: var(--ink); margin-bottom: 10px; }
+  .modular-banner-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.65; max-width: 720px; }
+  .modular-banner-desc strong { color: var(--pink-deep); }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1: MAIN ============ -->
+<div class="page active" id="page-main">
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="dot"></span>Estrutura de negócio · Junho 2026</div>
+    <h1 class="hero-title">Mil <span class="px">Possi</span><span class="gx">bilidades</span></h1>
+    <p class="hero-sub">Automação, CRM e estratégia de marketing com inteligência artificial. Construído para clínicas e consultórios, pensado para qualquer negócio que precise de mais inteligência operando por dentro.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Land & Expand</span>
+      <span class="hero-tag">Sistema próprio · sem custo por lead</span>
+      <span class="hero-tag">Saúde como porta de entrada</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- POSICIONAMENTO -->
+  <div class="block">
+    <span class="block-tag">Posicionamento</span>
+    <h2 class="block-title">O que nos torna diferentes de qualquer agência ou plataforma de automação</h2>
+
+    <div class="diferencial-card">
+      <div class="diferencial-label">Diferencial único</div>
+      <div class="diferencial-text">A única empresa que entrega <span class="hl">sistema operacional, CRM próprio e estratégia de marketing</span> integrados, sem cobrar por lead, sem plataforma de terceiro, e sem o cliente precisar entender de tecnologia.</div>
+    </div>
+
+    <div class="nicho-strip">
+      <div class="nicho-icon">🎯</div>
+      <div class="nicho-text"><strong>Saúde e estética é a porta de entrada, não o destino.</strong> Começamos por odontologia e clínicas de estética porque é onde temos acesso e aprendizado mais rápido agora. O plano é testar e validar em outros nichos, advocacia, contabilidade, food service, qualquer negócio com gargalo operacional que IA e automação resolvem bem.</div>
+    </div>
+  </div>
+
+  <!-- DIAGNÓSTICO -->
+  <div class="block">
+    <span class="block-tag">Ponto de entrada</span>
+    <h2 class="block-title">Toda relação começa com diagnóstico, nunca com proposta pronta</h2>
+    <p class="block-desc">Antes de qualquer venda, mapeamos a operação real do cliente, marketing, vendas, atendimento. É o que torna cada entrega genuinamente pensada para aquele negócio, e não um pacote replicado sem critério.</p>
+
+    <div class="diag-bar">
+      <div class="diag-num">01</div>
+      <div>
+        <div class="diag-title">Diagnóstico inicial gratuito</div>
+        <div class="diag-desc">Marketing, vendas e operação · mapeia dores reais e abre porta para os produtos certos, não os mesmos para todos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUTOS -->
+  <div class="block">
+    <span class="block-tag">Produtos</span>
+    <h2 class="block-title">O que vendemos hoje, e o que ainda está em construção</h2>
+
+    <div class="products-stack">
+
+      <!-- P1 -->
+      <div class="product-card">
+        <div class="product-top">
+          <div>
+            <span class="product-id">Produto 01 · Disponível agora</span>
+            <div class="product-name">Sistema Operacional do Consultório</div>
+          </div>
+          <span class="product-status status-now">ativo</span>
+        </div>
+        <p class="product-tagline">Seu consultório atendendo, agendando e se relacionando com pacientes, no automático.</p>
+        <div class="product-grid">
+          <div>
+            <div class="product-list-label">Versão completa, entrega</div>
+            <div class="product-item"><div class="product-item-dot"></div>Agente de IA no WhatsApp com nome e personalidade do consultório</div>
+            <div class="product-item"><div class="product-item-dot"></div>Agendamento automático integrado ao Google Calendar</div>
+            <div class="product-item"><div class="product-item-dot"></div>CRM próprio, pacientes, histórico, status, Kanban</div>
+            <div class="product-item"><div class="product-item-dot"></div>Lembrete 24h, transferência para humano, pós-atendimento por procedimento</div>
+            <div class="product-item"><div class="product-item-dot"></div>Reativação automática por prazo de retorno e disparo de promoções</div>
+            <div class="product-item"><div class="product-item-dot"></div>Prontuário integrado, lido pelo agente para personalizar o atendimento</div>
+            <div class="product-item"><div class="product-item-dot"></div>Recuperação modular de quem perguntou e não agendou, ideal para quem faz tráfego pago</div>
+            <div class="product-excl"><strong>Não inclui:</strong> redes sociais, tráfego pago, criação de conteúdo</div>
+            <button onclick="showPage('page-detail')" class="detail-link">Ver como funciona em detalhe →</button>
+          </div>
+          <div class="product-meta">
+            <div class="meta-chip">Implementação: <b>1 mês</b>, padrão para todo cliente novo</div>
+            <div class="meta-chip">Contrato mínimo: <b>6 meses</b></div>
+          </div>
+        </div>
+
+        <div class="basic-divider"></div>
+
+        <div class="basic-tier">
+          <div class="basic-tier-label">Versão básica, ticket de entrada</div>
+          <div class="basic-tier-desc">Para clínicas que não têm orçamento para o pacote completo. Agente de IA no WhatsApp com agendamento, mais CRM simples com Kanban e histórico de conversas. Sem reativação, sem automações de recorrência, sem prontuário integrado.</div>
+          <div class="meta-chip" style="margin-top:12px;display:inline-block">Implementação: <b>depende do caso</b></div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="product-card">
+        <div class="product-top">
+          <div>
+            <span class="product-id">Produto 02 · Disponível agora</span>
+            <div class="product-name">Presença e Crescimento</div>
+          </div>
+          <span class="product-status status-now">ativo</span>
+        </div>
+        <p class="product-tagline">Estratégia de marketing que trabalha junto com o sistema, não separada dele.</p>
+        <div class="product-grid">
+          <div>
+            <div class="product-list-label">Entrega</div>
+            <div class="product-item"><div class="product-item-dot"></div>Estratégia completa de marketing 360, site, redes, tráfego, tudo que o negócio deveria fazer</div>
+            <div class="product-item"><div class="product-item-dot"></div>Google Meu Negócio configurado e otimizado</div>
+            <div class="product-item"><div class="product-item-dot"></div>Linha editorial estratégica, direção de conteúdo e cadência semanal sugerida</div>
+            <div class="product-item"><div class="product-item-dot"></div>Estratégia mensal de promoções integradas ao sistema de disparos</div>
+            <div class="product-item"><div class="product-item-dot"></div>Relatório e reunião mensal</div>
+            <div class="product-excl"><strong>Não inclui:</strong> calendário editorial dia a dia, criação de conteúdo, gestão de perfil diária, tráfego pago</div>
+          </div>
+          <div class="product-meta">
+            <div class="meta-chip">Construção da estratégia: <b>1 mês</b>, mesmo prazo sempre</div>
+            <div class="meta-chip">Depois: ~1h/mês de acompanhamento</div>
+            <div class="meta-chip">Contrato mínimo: <b>6 meses</b></div>
+          </div>
+        </div>
+        <div class="flex-note">⚖️ <strong>Em definição:</strong> a execução de cada frente, Google Meu Negócio, criativos, tráfego, pode ser feita pela Mil Possibilidades ou indicada a um parceiro de confiança. Decidimos caso a caso conforme a estrutura interna evolui. O cliente sempre sabe quem está com a mão na massa.</div>
+      </div>
+
+      <!-- P3 -->
+      <div class="product-card">
+        <div class="product-top">
+          <div>
+            <span class="product-id">Produto 03 · Disponível agora</span>
+            <div class="product-name">Site Interativo com Suporte</div>
+          </div>
+          <span class="product-status status-now">ativo</span>
+        </div>
+        <p class="product-tagline">Um site que representa o consultório de verdade, copy profissional, painel admin, cliente no controle.</p>
+        <div class="product-grid">
+          <div>
+            <div class="product-list-label">Entrega</div>
+            <div class="product-item"><div class="product-item-dot"></div>Site profissional com copy escrita pela Mil Possibilidades</div>
+            <div class="product-item"><div class="product-item-dot"></div>Painel admin para atualizar conteúdo básico</div>
+            <div class="product-item"><div class="product-item-dot"></div>Hospedagem inclusa e suporte mensal</div>
+            <div class="product-excl"><strong>Não inclui:</strong> e-commerce, sistema de pagamento, conteúdo contínuo</div>
+          </div>
+          <div class="product-meta">
+            <div class="meta-chip">Implementação: <b>1 mês</b>, varia conforme o briefing</div>
+            <div class="meta-chip">Recorrência: suporte + hospedagem</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDON TRÁFEGO -->
+      <div class="product-card featured">
+        <div class="product-top">
+          <div>
+            <span class="product-id">Add-on · exclusivo Produto 02</span>
+            <div class="product-name">Gestão de Tráfego Pago</div>
+          </div>
+          <span class="product-status status-flex">condicional</span>
+        </div>
+        <p class="product-tagline">Campanhas no Meta Ads gerenciadas com inteligência, leva paciente direto para o WhatsApp.</p>
+        <div class="product-grid">
+          <div>
+            <div class="product-list-label">Entrega</div>
+            <div class="product-item"><div class="product-item-dot"></div>Estrutura e gestão de campanhas via Claude + MCP oficial do Meta</div>
+            <div class="product-item"><div class="product-item-dot"></div>Criativo produzido por parceiro com briefing da Mil Possibilidades</div>
+            <div class="product-item"><div class="product-item-dot"></div>Relatório mensal de performance integrado</div>
+            <div class="product-excl"><strong>Condição de venda:</strong> só para quem já tem Produto 02 ativo, e só quando o processo de criativo estiver redondo</div>
+          </div>
+          <div class="product-meta">
+            <div class="meta-chip">Verba de mídia: paga direto pelo cliente à Meta</div>
+            <div class="meta-chip">Você aprova antes de qualquer publicação</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modular-banner">
+      <div class="modular-banner-title">Nenhum desses produtos é tudo ou nada</div>
+      <div class="modular-banner-desc">O Sistema Operacional do Consultório, descrito acima, é o que ele pode entregar no seu estado mais completo. Na prática, montamos planos mais enxutos ou mais completos conforme a necessidade e o orçamento de cada cliente, um consultório pequeno não precisa do mesmo nível de automação que um cliente investindo pesado em tráfego pago. <strong>Detalhes de como isso funciona na prática estão na página de detalhamento do Produto 01.</strong></div>
+    </div>
+  </div>
+
+  <!-- FUTURO: AUTOMAÇÃO DE SOCIAL MEDIA -->
+  <div class="block">
+    <span class="block-tag">Em construção · médio prazo</span>
+    <h2 class="block-title">O próximo produto: automação de social media sem ser agência</h2>
+    <p class="block-desc">A gente nunca vai executar social media. Mas existe um caminho para vender inteligência e ferramenta para quem já vai executar de qualquer forma, sem empurrar o cliente para uma agência cara.</p>
+
+    <div class="future-card">
+      <div class="future-badge">🌱 produto futuro · ainda em estudo</div>
+      <div class="future-title">Mil Possibilidades estrategista, a IA ferramenta, alguém barato executa</div>
+      <div class="future-desc">O cliente não precisa contratar agência. Pode ser a secretária que já tem, um estagiário, ou ele mesmo. Com a estratégia da Mil Possibilidades e ferramentas de IA para copy, arte e edição de vídeo, essa pessoa entrega o que uma agência cobraria muito mais caro para fazer.</div>
+      <div class="future-pillars">
+        <div class="pillar">
+          <div class="pillar-title">Estratégia, sempre da Mil Possibilidades</div>
+          <div class="pillar-desc">Calendário, linha editorial e direção de conteúdo definidos por quem entende do negócio do cliente</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">Execução, de quem já está lá</div>
+          <div class="pillar-desc">Secretária, estagiário ou o próprio dono, depende do nicho e do nível de cada cliente</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">IA como ferramenta de produção</div>
+          <div class="pillar-desc">Copy assistida, geração de arte, edição de vídeo, tudo orientado, nunca solto</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">Automação do processo</div>
+          <div class="pillar-desc">Agendamento de posts, fluxo de aprovação, repetição do que funciona, sem reinventar toda semana</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINCÍPIO DE INOVAÇÃO -->
+  <div class="block">
+    <span class="block-tag">Princípio</span>
+    <div class="principle-band">
+      <div class="principle-quote">A saúde é onde <span class="px">começamos</span>. Inteligência artificial e automação aplicadas a qualquer gargalo operacional, marketing, atendimento, financeiro, é onde <span class="gx">vamos chegar</span>.</div>
+      <div class="principle-tags">
+        <span class="ptag">Inovação contínua</span>
+        <span class="ptag">Automação como filosofia, não produto fixo</span>
+        <span class="ptag">Múltiplos nichos a explorar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRECIFICAÇÃO -->
+  <div class="block">
+    <span class="block-tag">Precificação estimada · referência de mercado</span>
+    <h2 class="block-title">Faixas de valor por produto</h2>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-product">Produto 01 · Sistema</div>
+        <div class="price-row"><span class="price-label">Setup, taxa única</span><span class="price-val">R$1.500–3.000</span></div>
+        <div class="price-row"><span class="price-label">Mensalidade</span><span class="price-val">R$1.800–2.500</span></div>
+        <div class="price-row"><span class="price-label">Custo operacional</span><span class="price-val">~R$280–555</span></div>
+        <div class="price-margin"><span class="price-margin-label">Margem por cliente</span><span class="price-margin-val">~R$1.200–2.000</span></div>
+      </div>
+      <div class="price-card">
+        <div class="price-product">Produto 02 · Marketing</div>
+        <div class="price-row"><span class="price-label">Setup inicial</span><span class="price-val">R$500–800</span></div>
+        <div class="price-row"><span class="price-label">Mensalidade</span><span class="price-val">R$800–1.200</span></div>
+        <div class="price-row"><span class="price-label">Esforço mensal</span><span class="price-val">~1h/cliente</span></div>
+        <div class="price-margin"><span class="price-margin-label">Margem</span><span class="price-margin-val">Alta</span></div>
+      </div>
+      <div class="price-card">
+        <div class="price-product">Produto 03 · Site</div>
+        <div class="price-row"><span class="price-label">Criação</span><span class="price-val">R$2.500–4.500</span></div>
+        <div class="price-row"><span class="price-label">Suporte mensal</span><span class="price-val">R$200–400</span></div>
+        <div class="price-row"><span class="price-label">Add-on tráfego, fee</span><span class="price-val">R$800–1.500</span></div>
+        <div class="price-margin"><span class="price-margin-label">Recorrência</span><span class="price-margin-val">Baixo esforço</span></div>
+      </div>
+    </div>
+
+    <div class="combo-row">
+      <div class="combo-card">
+        <div class="combo-title">Só Sistema</div>
+        <div class="combo-sub">P1 apenas</div>
+        <div class="combo-price">R$1.8–2.5k</div>
+        <div class="combo-price-sub">por mês · entrada</div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-title">Sistema + Marketing</div>
+        <div class="combo-sub">P1 + P2</div>
+        <div class="combo-price">R$2.6–3.7k</div>
+        <div class="combo-price-sub">por mês · mais comum</div>
+      </div>
+      <div class="combo-card">
+        <div class="combo-title">Completo</div>
+        <div class="combo-sub">P1 + P2 + P3</div>
+        <div class="combo-price">R$2.8–4.1k</div>
+        <div class="combo-price-sub">por mês · cliente full</div>
+      </div>
+      <div class="combo-card" style="background:var(--ink)">
+        <div class="combo-title" style="color:var(--cream)">Tudo + Tráfego</div>
+        <div class="combo-sub" style="color:rgba(251,246,241,0.5)">P1+P2+P3+Add-on</div>
+        <div class="combo-price" style="color:var(--green)">R$3.6–5.6k</div>
+        <div class="combo-price-sub" style="color:rgba(251,246,241,0.5)">ticket máximo</div>
+      </div>
+    </div>
+
+    <div class="scale-card">
+      <div class="scale-title">📈 O que 10 clientes representam, cenário médio</div>
+      <div class="scale-grid">
+        <div>
+          <div class="scale-label">Receita recorrente</div>
+          <div class="scale-value">R$30k</div>
+          <div class="scale-sub">por mês · 10 clientes a R$3k</div>
+        </div>
+        <div>
+          <div class="scale-label">Custo operacional total</div>
+          <div class="scale-value">~R$5–6k</div>
+          <div class="scale-sub">infraestrutura de todos os clientes</div>
+        </div>
+        <div>
+          <div class="scale-label">Margem bruta</div>
+          <div class="scale-value">~R$24k</div>
+          <div class="scale-sub">2 pessoas · sem contratar ninguém</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="block">
+    <span class="block-tag">Horizonte</span>
+    <h2 class="block-title">Onde estamos e onde vamos chegar</h2>
+
+    <div class="roadmap-list">
+      <div class="road-item">
+        <div class="road-phase">Agora<br>0–6 meses</div>
+        <div>
+          <div class="road-title">Validação com clínicas e consultórios</div>
+          <div class="road-desc">Edu como primeiro case. Primeiros 3–5 clientes pagantes em odontologia e estética. Refinar sistema base, documentar processo de replicação, construir portfólio de resultados reais.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-phase">Crescimento<br>6–12 meses</div>
+        <div>
+          <div class="road-title">Escalar saúde · lançar site, tráfego e automação de social</div>
+          <div class="road-desc">10+ clientes recorrentes. Produto 03 e add-on de tráfego operacionais. Primeiro teste real do produto de automação de social media com cliente piloto.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-phase">Expansão<br>12–24 meses</div>
+        <div>
+          <div class="road-title">Outros nichos · consultoria operacional interna</div>
+          <div class="road-desc">Advocacia, contabilidade, food service. Início da consultoria de IA e automação para processos internos de empresas, identificar gargalos, implementar sistemas, treinar equipes.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-phase">Destino<br>24+ meses</div>
+        <div>
+          <div class="road-title">Inteligência operacional para empresas de qualquer setor</div>
+          <div class="road-desc">IA e automação aplicadas a marketing, financeiro, atendimento e processos internos, em qualquer segmento. Saúde como base de cases que nos trouxe até aqui, não como limite do que somos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-text">Mil Possibilidades</div>
+  <div class="footer-sub">documento vivo · atualizado conforme o negócio evolui</div>
+</div>
+
+</div>
+<!-- ============ END PAGE 1 ============ -->
+
+<!-- ============ PAGE 2: DETAIL ============ -->
+<div class="page" id="page-detail">
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <button class="back-link" onclick="showPage('page-main')">← Voltar para a estrutura geral</button>
+    </div>
+  </div>
+
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <div class="hero-eyebrow"><span class="dot"></span>Produto 01, detalhamento</div>
+      <h1 class="detail-hero-title">Como o <span class="px">Sistema Operacional do Consultório</span> funciona na prática</h1>
+      <p class="detail-hero-sub">Não é só um chatbot que agenda consulta. É um sistema que acompanha o paciente antes, durante e depois do atendimento, com inteligência sobre cada procedimento e cada pessoa, e que também recupera quem quase agendou e desistiu no caminho.</p>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- REATIVAÇÃO POR PRAZO -->
+    <div class="block">
+      <span class="block-tag">Automação 01</span>
+      <h2 class="block-title">Reativação automática por prazo de retorno</h2>
+      <p class="block-desc">Muitos procedimentos têm um prazo natural de retorno. O sistema sabe disso e age antes do paciente esquecer, sem o consultório precisar lembrar manualmente de cada caso.</p>
+
+      <div class="examples-grid">
+        <div class="example-card">
+          <div class="example-proc">Odontologia</div>
+          <div class="example-title">Limpeza dental, retorno em 6 meses</div>
+          <div class="example-desc">No 5º mês após a última limpeza, o sistema dispara uma mensagem lembrando a paciente que está chegando a hora de voltar. Não espera o prazo vencer, antecipa enquanto ainda há tempo de agendar com calma.</div>
+        </div>
+        <div class="example-card">
+          <div class="example-proc">Estética</div>
+          <div class="example-title">Botox, retorno em 6 meses</div>
+          <div class="example-desc">Mesma lógica, prazo diferente. O sistema identifica que o efeito está acabando e manda a mensagem no momento certo para a paciente já agendar antes de perceber o efeito desaparecer.</div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-icon">🔁</div>
+          <div>
+            <div class="scenario-name">Como o prazo é definido por procedimento</div>
+            <div class="scenario-sub">Cada tipo de procedimento tem seu próprio prazo configurado no sistema</div>
+          </div>
+        </div>
+        <div class="scenario-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-time">Dia 0</div>
+              <div class="tl-text">Procedimento registrado no sistema, com o tipo e a data. <strong>O prazo de retorno já vem associado ao tipo de procedimento.</strong></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">Mês 5</div>
+              <div class="tl-text">Sistema detecta que o prazo está próximo de vencer e dispara a mensagem de lembrete.<div class="msg-bubble">"Oi, [nome]! Faz quase 6 meses desde sua última limpeza. Que tal já garantir seu horário?"</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">Resposta</div>
+              <div class="tl-text">Se a paciente responde, o agente já direciona para o fluxo normal de agendamento. Se não responde, o sistema registra a tentativa e pode reforçar mais adiante, conforme a regra definida com o consultório.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PÓS ATENDIMENTO -->
+    <div class="block">
+      <span class="block-tag">Automação 02</span>
+      <h2 class="block-title">Pós-atendimento com cuidados específicos do procedimento</h2>
+      <p class="block-desc">Assim que o paciente sai da consulta, o sistema já sabe o que aconteceu e manda as orientações certas, vindas diretamente do que está registrado no prontuário daquele paciente.</p>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-icon">💉</div>
+          <div>
+            <div class="scenario-name">Exemplo real, preenchimento labial</div>
+            <div class="scenario-sub">Do fim da consulta até a mensagem de cuidados chegar no WhatsApp</div>
+          </div>
+        </div>
+        <div class="scenario-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-time">0 min</div>
+              <div class="tl-text">Paciente termina a consulta. Procedimento e observações são registrados no prontuário dentro do CRM.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">30,60 min</div>
+              <div class="tl-text">Sistema dispara mensagem automática com as orientações específicas daquele procedimento, lidas diretamente do prontuário.<div class="msg-bubble">"Oi, [nome]! Sobre o preenchimento labial de hoje, evite massagear a região por 48h, não exponha ao sol direto por 3 dias, e se sentir inchaço incomum, nos avise por aqui."</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">Acompanhamento</div>
+              <div class="tl-text">Se a paciente responde com dúvida ou relata algo fora do esperado, o agente avalia se responde direto ou transfere para o profissional, dependendo da gravidade configurada.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRONTUÁRIO -->
+    <div class="block">
+      <span class="block-tag">Base de tudo</span>
+      <h2 class="block-title">Prontuário integrado ao CRM</h2>
+      <p class="block-desc">É a peça que conecta as outras automações. Sem prontuário, não tem como personalizar pós-atendimento nem reativação de verdade, é tudo genérico. Com prontuário, o agente conhece o histórico de cada paciente.</p>
+
+      <div class="prontuario-card">
+        <div class="prontuario-badge">🌱 Construído em fases, começa simples</div>
+        <div class="prontuario-title">O profissional escreve, o agente aprende a ler</div>
+        <div class="prontuario-desc">O dentista ou esteticista registra suas anotações de cada paciente em um espaço dedicado dentro do CRM, igual uma ficha. Com o tempo, o agente vai conseguindo interpretar essas anotações para personalizar como conversa com aquele paciente específico.</div>
+
+        <div class="mvp-steps">
+          <div class="mvp-step">
+            <div class="mvp-step-num">FASE 1</div>
+            <div class="mvp-step-text"><strong>MVP simples.</strong> Campo de texto livre por paciente, dentro da ficha no CRM. O profissional escreve o que achar relevante depois de cada consulta.</div>
+          </div>
+          <div class="mvp-step">
+            <div class="mvp-step-num">FASE 2</div>
+            <div class="mvp-step-text"><strong>Leitura estruturada.</strong> O agente passa a ler essas anotações antes de cada conversa, identificando procedimentos, restrições e preferências relevantes daquele paciente.</div>
+          </div>
+          <div class="mvp-step">
+            <div class="mvp-step-num">FASE 3</div>
+            <div class="mvp-step-text"><strong>Personalização avançada.</strong> O agente usa o histórico para ajustar tom, sugestões e cuidados de forma cada vez mais precisa, sem precisar perguntar de novo o que já está registrado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECUPERAÇÃO DE QUEM NÃO AGENDOU -->
+    <div class="block">
+      <span class="block-tag">Automação 03, em construção</span>
+      <h2 class="block-title">Recuperação de quem perguntou e não agendou</h2>
+      <p class="block-desc">Boa parte das conversas no WhatsApp não termina em agendamento. Paciente pergunta preço, pergunta horário, tira uma dúvida, e some. Hoje isso é receita perdida e ninguém volta atrás para resgatar. Esse módulo existe para isso.</p>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-icon">💬</div>
+          <div>
+            <div class="scenario-name">Exemplo real, perguntou o preço e não voltou</div>
+            <div class="scenario-sub">O sistema identifica a conversa parada e retoma no momento certo</div>
+          </div>
+        </div>
+        <div class="scenario-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-time">Dia 0</div>
+              <div class="tl-text">Paciente pergunta o valor de um procedimento ou disponibilidade de horário. Recebe a resposta do agente e não dá continuidade, não agenda.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">1,2 dias</div>
+              <div class="tl-text">Sistema identifica que a conversa ficou parada nesse ponto e dispara um follow-up direto, perguntando o que está impedindo o agendamento.<div class="msg-bubble">"Oi, [nome]! Vi que você perguntou sobre [procedimento]. Ainda tem interesse em agendar? Se tiver alguma dúvida ou travou em algo, me conta que te ajudo."</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-time">Qualificação</div>
+              <div class="tl-text">O agente entende o motivo, preço, horário, insegurança, e responde de forma direcionada. Quando faz sentido, conduz de volta para o agendamento.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modular-banner">
+        <div class="modular-banner-title">Importante: isso é modular, não vem em todo plano</div>
+        <div class="modular-banner-desc">Esse tipo de qualificação de quem não agendou faz mais sentido para clínicas que já têm volume de conversas, ou que estão investindo em tráfego pago e precisam aproveitar cada lead que chega. Para clínicas pequenas com fluxo baixo, pode não valer o custo. <strong>O sistema é desenhado em módulos, o cliente leva o que faz sentido pro momento dele, não o pacote inteiro por padrão.</strong></div>
+      </div>
+    </div>
+
+    <!-- CRM CORE -->
+    <div class="block">
+      <span class="block-tag">Estrutura geral</span>
+      <h2 class="block-title">O que sustenta tudo isso por dentro</h2>
+      <p class="block-desc">Essas automações não existem isoladas, elas rodam sobre uma base de CRM e agente que já cobre o atendimento do dia a dia.</p>
+
+      <div class="crm-grid">
+        <div class="crm-feature">
+          <div class="crm-feature-icon">🤖</div>
+          <div class="crm-feature-title">Agente de IA no WhatsApp</div>
+          <div class="crm-feature-desc">Atende, agenda, responde dúvidas, com nome e personalidade do consultório.</div>
+        </div>
+        <div class="crm-feature">
+          <div class="crm-feature-icon">📋</div>
+          <div class="crm-feature-title">Kanban de pacientes</div>
+          <div class="crm-feature-desc">Visão de quem está em qual etapa, lead, agendado, em acompanhamento, inativo.</div>
+        </div>
+        <div class="crm-feature">
+          <div class="crm-feature-icon">📅</div>
+          <div class="crm-feature-title">Agendamento integrado</div>
+          <div class="crm-feature-desc">Direto no Google Calendar do consultório, sem planilha paralela.</div>
+        </div>
+        <div class="crm-feature">
+          <div class="crm-feature-icon">⏰</div>
+          <div class="crm-feature-title">Lembrete 24h</div>
+          <div class="crm-feature-desc">Confirmação automática antes de cada consulta, reduz falta sem aviso.</div>
+        </div>
+        <div class="crm-feature">
+          <div class="crm-feature-icon">🧑‍⚕️</div>
+          <div class="crm-feature-title">Transferência para humano</div>
+          <div class="crm-feature-desc">Quando o caso exige, o profissional assume com histórico completo da conversa.</div>
+        </div>
+        <div class="crm-feature">
+          <div class="crm-feature-icon">📊</div>
+          <div class="crm-feature-title">Métricas de operação</div>
+          <div class="crm-feature-desc">Agendamentos, confirmações, reativações, tudo visível em um painel.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANOS MODULARES -->
+    <div class="block">
+      <span class="block-tag">Princípio de venda</span>
+      <h2 class="block-title">O sistema é completo, o plano vendido nem sempre é</h2>
+      <p class="block-desc">Tudo que está descrito nesta página é o que o sistema é capaz de fazer no seu estado mais completo. Isso não significa que todo cliente recebe tudo, ou paga por tudo.</p>
+
+      <div class="roadmap-future-card">
+        <div class="roadmap-future-badge">⚙️ como vendemos isso na prática</div>
+        <div class="roadmap-future-title">Planos enxutos para quem precisa de menos, completos para quem precisa de mais</div>
+        <div class="roadmap-future-desc">Um consultório pequeno, com baixo volume e sem tráfego pago, pode não precisar de reativação automática ou de recuperação de quem não agendou. Já um cliente que investe em anúncios e gera muito mais conversas por mês precisa de qualificação ativa para não perder dinheiro investido em lead que esfria. A régua varia de cliente para cliente, e o pacote vendido reflete isso, não o inverso.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">Mil Possibilidades</div>
+    <button class="back-link footer-back" onclick="showPage('page-main')" style="margin-top:16px">← Voltar para a estrutura geral</button>
+  </div>
+
+</div>
+<!-- ============ END PAGE 2 ============ -->
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+</script>
+
+</body>
+</html>
